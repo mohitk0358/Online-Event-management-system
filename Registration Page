@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Event Management</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Specific styles for the registration page */
+        #registration-form {
+            width: 400px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #registration-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #registration-form input[type="text"],
+        #registration-form input[type="email"],
+        #registration-form input[type="password"] {
+            width: calc(100% - 12px); /* Account for padding */
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        #registration-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        #registration-form button:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Event Management System</h1>
+        <nav>
+            <a href="index.html">Home</a>
+             </nav>
+    </header>
+    <main>
+        <section id="registration-form">
+            <h2>Register</h2>
+            <form id="registerForm">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <div id="usernameError" class="error-message"></div>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <div id="emailError" class="error-message"></div>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <div id="passwordError" class="error-message"></div>
+
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div id="confirmPasswordError" class="error-message"></div>
+
+                <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="#">Login here</a></p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Event Management System</p>
+    </footer>
+    <script>
+       document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('registerForm');
+    const usernameInput = document.getElementById('username');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent form from submitting normally
+
+        // Reset error messages
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+
+        let isValid = true;
+
+        if (usernameInput.value.trim() === '') {
+            document.getElementById('usernameError').textContent = 'Username is required.';
+            isValid = false;
+        }
+
+        if (emailInput.value.trim() === '') {
+            document.getElementById('emailError').textContent = 'Email is required.';
+            isValid = false;
+        } else if (!isValidEmail(emailInput.value.trim())) {
+            document.getElementById('emailError').textContent = 'Invalid email format.';
+            isValid = false;
+        }
+
+        if (passwordInput.value.trim() === '') {
+            document.getElementById('passwordError').textContent = 'Password is required.';
+            isValid = false;
+        } else if (passwordInput.value.length < 6) {
+            document.getElementById('passwordError').textContent = 'Password must be at least 6 characters long.';
+            isValid = false;
+        }
+
+        if (confirmPasswordInput.value.trim() === '') {
+            document.getElementById('confirmPasswordError').textContent = 'Confirm your password.';
+            isValid = false;
+        } else if (passwordInput.value !== confirmPasswordInput.value) {
+            document.getElementById('confirmPasswordError').textContent = 'Passwords do not match.';
+            isValid = false;
+        }
+
+        if (isValid) {
+            // Here you would normally send the data to a server
+            alert('Registration successful!'); // Placeholder
+            form.reset(); // Clear the form
+        }
+    });
+
+    function isValidEmail(email) {
+        // Basic email validation regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+});
+
+    </script>
+</body>
+</html>
