@@ -1,0 +1,35 @@
+// script.js
+function registerForEvent(eventName) {
+    alert("You have registered for " + eventName + "!");
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createEventLink = document.querySelector('nav a:nth-child(3)'); // Select "Create Event" link
+    const eventListSection = document.getElementById('event-list');
+    const createEventSection = document.getElementById('create-event');
+    const eventForm = document.getElementById('event-form');
+
+    createEventLink.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent default link behavior
+        eventListSection.style.display = 'none';
+        createEventSection.style.display = 'block';
+    });
+
+    eventForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const eventName = document.getElementById('eventName').value;
+        const eventDate = document.getElementById('eventDate').value;
+        const eventLocation = document.getElementById('eventLocation').value;
+
+        // Basic event creation (no server-side storage)
+        const newEventDiv = document.createElement('div');
+        newEventDiv.className = 'event';
+        newEventDiv.innerHTML = <h3>${eventName}</h3><p>Date: ${eventDate}</p><p>Location: ${eventLocation}</p><button onclick="registerForEvent('${eventName}')">Register</button>;
+        document.getElementById('event-list').appendChild(newEventDiv);
+
+        // Reset form and show event list
+        eventForm.reset();
+        createEventSection.style.display = 'none';
+        eventListSection.style.display = 'block';
+    });
+});
